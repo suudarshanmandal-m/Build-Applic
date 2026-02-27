@@ -1,10 +1,11 @@
-// src/index.ts
+// server/index.ts
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
-import { serveStatic } from "./static";
 import { createServer } from "http";
 import path from "path";
 import { fileURLToPath } from "url";
+import fs from "fs";
+import { serveStatic } from "./static"; // optional, can keep your implementation
 
 const app = express();
 const httpServer = createServer(app);
@@ -15,17 +16,17 @@ declare module "http" {
   }
 }
 
-// Body parsing with rawBody
+// Body parsing with rawBody capture
 app.use(
   express.json({
     verify: (req, _res, buf) => {
       req.rawBody = buf;
     },
-  }),
+  })
 );
 app.use(express.urlencoded({ extended: false }));
 
-// Logger utility
+// Logger
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
     hour: "numeric",
@@ -33,15 +34,14 @@ export function log(message: string, source = "express") {
     second: "2-digit",
     hour12: true,
   });
-
   console.log(`${formattedTime} [${source}] ${message}`);
 }
 
 // Request logging middleware
 app.use((req, res, next) => {
   const start = Date.now();
-  const path = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
+  const pathUrl = req.path;
+  let capturedJsonResponse: Record<string, any> | undefined;
 
   const originalResJson = res.json;
   res.json = function (bodyJson, ...args) {
@@ -51,12 +51,11 @@ app.use((req, res, next) => {
 
   res.on("finish", () => {
     const duration = Date.now() - start;
-    if (path.startsWith("/api")) {
-      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
+    if (pathUrl.startsWith("/api")) {
+      let logLine = `${req.method} ${pathUrl} ${res.statusCode} in ${duration}ms`;
       if (capturedJsonResponse) {
         logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
       }
-
       log(logLine);
     }
   });
@@ -65,7 +64,13 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  await registerRoutes(httpServer, app);
+  try {
+    await registerRoutes(httpServer, app); // include DB init here if needed
+    log("Routes and DB initialized successfully");
+  } catch (err) {
+    console.error("Failed to initialize routes or DB:", err);
+    process.exit(1); // Stop server if DB fails
+  }
 
   // Global error handler
   app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
@@ -74,32 +79,35 @@ app.use((req, res, next) => {
 
     console.error("Internal Server Error:", err);
 
-    if (res.headersSent) {
-      return next(err);
-    }
+    if (res.headersSent) return next(err);
 
     return res.status(status).json({ message });
   });
 
-  // Vite in development, static serving in production
+  // Serve frontend files in production
   if (process.env.NODE_ENV === "production") {
-    // Serve built client from dist/public
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
     const staticPath = path.join(__dirname, "../dist/public");
+    const indexPath = path.join(staticPath, "index.html");
+
+    // Check if index.html exists
+    if (!fs.existsSync(indexPath)) {
+      console.error("Error: index.html not found at", indexPath);
+      process.exit(1);
+    }
 
     app.use(express.static(staticPath));
-
-    // SPA fallback
     app.get("*", (_req, res) => {
-      res.sendFile(path.join(staticPath, "index.html"));
+      res.sendFile(indexPath);
     });
   } else {
+    // Development Vite server
     const { setupVite } = await import("./vite");
     await setupVite(httpServer, app);
   }
 
-  // Listen on the port provided by Render
+  // Start server on Render port
   const port = parseInt(process.env.PORT || "5000", 10);
   httpServer.listen(
     {
@@ -108,11 +116,11 @@ app.use((req, res, next) => {
       reusePort: true,
     },
     () => {
-      log(`serving on port ${port}`);
-    },
+      log(`Server running on port ${port}`);
+    }
   );
 
-  // Error listener for unexpected startup errors
+  // Listen for server errors
   httpServer.on("error", (err) => {
     console.error("Server failed to start:", err);
   });
