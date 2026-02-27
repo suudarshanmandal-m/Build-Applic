@@ -1,0 +1,592 @@
+
+
+Enhance my existing CYBER CORNER React + Vite + Express + PostgreSQL application.
+
+Do NOT rebuild project. Extend existing structure cleanly and efficiently.
+
+Add the following production-ready features in an optimized way.
+
+
+---
+
+1️⃣ CUSTOMER REQUEST TRACKING SYSTEM
+
+BACKEND:
+
+Create protected route logic:
+
+GET /api/track-request?phone=XXXXXXXXXX
+
+Functionality:
+
+Validate phone number
+
+Return all service requests for that phone
+
+Return:
+
+serviceType
+
+status
+
+createdAt
+
+adminNotes (add new DB column if not exists)
+
+
+
+Add new column to database:
+
+adminNotes TEXT
+
+Secure against SQL injection. Add rate limiting to this endpoint.
+
+
+---
+
+FRONTEND:
+
+Create page:
+
+TrackRequest.jsx
+
+Features:
+
+Phone input field
+
+Fetch API request
+
+Display results in clean card layout
+
+Status badge:
+
+Green = Completed
+
+Yellow = Pending
+
+
+Show admin notes if available
+
+Show "No records found" message
+
+
+Add route: /track
+
+Add link in Navbar: Track Request
+
+
+---
+
+2️⃣ EMAIL NOTIFICATION SYSTEM
+
+Install: npm install nodemailer
+
+Create:
+
+utils/sendEmail.js
+
+Use Gmail SMTP via environment variables:
+
+EMAIL_USER= EMAIL_PASS=
+
+Send email when:
+
+New request submitted
+
+Admin marks request as Completed
+
+
+Email must include:
+
+CYBER CORNER
+Phone: 6297320156
+Professional HTML layout
+
+Do not block server if email fails (use try/catch).
+
+
+---
+
+3️⃣ FLOATING WHATSAPP BUTTON
+
+Create component:
+
+WhatsAppFloat.jsx
+
+Features:
+
+Fixed bottom-right
+
+Green circular button
+
+Smooth hover scale animation
+
+Opens: https://wa.me/6297320156
+
+Responsive
+
+Subtle bounce animation
+
+
+Add to main layout.
+
+
+---
+
+4️⃣ ADMIN ANALYTICS DASHBOARD
+
+BACKEND:
+
+Create protected route:
+
+GET /api/admin/analytics
+
+Return:
+
+totalRequests
+
+pendingRequests
+
+completedRequests
+
+todayRequests
+
+serviceBreakdown (GROUP BY serviceType)
+
+last7Days (GROUP BY date)
+
+
+Use optimized SQL queries. Avoid multiple unnecessary DB calls.
+
+
+---
+
+FRONTEND:
+
+Create:
+
+Analytics.jsx
+
+Route: /admin/analytics
+
+Install: npm install recharts
+
+Add:
+
+1. Top Stats Cards:
+
+Total Requests
+
+Pending
+
+Completed
+
+Today
+
+
+
+2. Pie Chart: Completed vs Pending
+
+
+3. Bar Chart: Service-wise requests
+
+
+4. Line Chart: Last 7 days activity
+
+
+
+Add loading state and error handling. Mobile responsive. Clean professional design.
+
+
+---
+
+5️⃣ BILINGUAL SUPPORT
+
+Ensure EN + Bengali working.
+
+Add translation keys:
+
+Track Request
+Enter Phone
+Check Status
+No records found
+Status
+Admin Notes
+Analytics
+Total Requests
+Pending
+Completed
+Today
+Service Breakdown
+Last 7 Days
+
+Update both en.json and bn.json.
+
+
+---
+
+6️⃣ SECURITY
+
+Validate inputs
+
+Use parameterized SQL queries
+
+Protect admin routes with JWT middleware
+
+Rate limit tracking endpoint
+
+Do not expose sensitive data
+
+
+
+---
+
+7️⃣ PERFORMANCE
+
+Optimize queries
+
+Use single aggregated SQL where possible
+
+Avoid unnecessary re-renders in React
+
+Use clean reusable components
+
+
+
+---
+
+Return:
+
+Backend route updates
+
+SQL queries
+
+DB migration change
+
+TrackRequest.jsx
+
+Analytics.jsx
+
+WhatsAppFloat.jsx
+
+sendEmail.js
+
+Updated translation files
+
+Required npm install commands
+
+
+Do not break existing functionality.
+
+
+---
+
+END.
+
+
+---
+
+This single prompt will:
+
+✅ Add customer tracking
+✅ Add email automation
+✅ Add WhatsApp integration
+✅ Add full analytics dashboard
+✅ Keep bilingual system
+✅ Maintain security
+
+You’ll save credits because everything is in ONE structured request.
+
+If you want next upgrade after this, tell me 🔥Perfect 👍 I’ll combine Request Tracking + Email Notification + WhatsApp Button + Admin Analytics Dashboard into ONE optimized prompt so your Replit Agent uses minimum credits.
+
+Copy everything below and paste into Replit AI 👇
+
+
+---
+
+🚀 CYBER CORNER – COMPLETE FEATURE UPGRADE PROMPT
+
+Enhance my existing CYBER CORNER React + Vite + Express + PostgreSQL application.
+
+Do NOT rebuild project. Extend existing structure cleanly and efficiently.
+
+Add the following production-ready features in an optimized way.
+
+
+---
+
+1️⃣ CUSTOMER REQUEST TRACKING SYSTEM
+
+BACKEND:
+
+Create protected route logic:
+
+GET /api/track-request?phone=XXXXXXXXXX
+
+Functionality:
+
+Validate phone number
+
+Return all service requests for that phone
+
+Return:
+
+serviceType
+
+status
+
+createdAt
+
+adminNotes (add new DB column if not exists)
+
+
+
+Add new column to database:
+
+adminNotes TEXT
+
+Secure against SQL injection. Add rate limiting to this endpoint.
+
+
+---
+
+FRONTEND:
+
+Create page:
+
+TrackRequest.jsx
+
+Features:
+
+Phone input field
+
+Fetch API request
+
+Display results in clean card layout
+
+Status badge:
+
+Green = Completed
+
+Yellow = Pending
+
+
+Show admin notes if available
+
+Show "No records found" message
+
+
+Add route: /track
+
+Add link in Navbar: Track Request
+
+
+---
+
+2️⃣ EMAIL NOTIFICATION SYSTEM
+
+Install: npm install nodemailer
+
+Create:
+
+utils/sendEmail.js
+
+Use Gmail SMTP via environment variables:
+
+EMAIL_USER= EMAIL_PASS=
+
+Send email when:
+
+New request submitted
+
+Admin marks request as Completed
+
+
+Email must include:
+
+CYBER CORNER
+Phone: 6297320156
+Professional HTML layout
+
+Do not block server if email fails (use try/catch).
+
+
+---
+
+3️⃣ FLOATING WHATSAPP BUTTON
+
+Create component:
+
+WhatsAppFloat.jsx
+
+Features:
+
+Fixed bottom-right
+
+Green circular button
+
+Smooth hover scale animation
+
+Opens: https://wa.me/6297320156
+
+Responsive
+
+Subtle bounce animation
+
+
+Add to main layout.
+
+
+---
+
+4️⃣ ADMIN ANALYTICS DASHBOARD
+
+BACKEND:
+
+Create protected route:
+
+GET /api/admin/analytics
+
+Return:
+
+totalRequests
+
+pendingRequests
+
+completedRequests
+
+todayRequests
+
+serviceBreakdown (GROUP BY serviceType)
+
+last7Days (GROUP BY date)
+
+
+Use optimized SQL queries. Avoid multiple unnecessary DB calls.
+
+
+---
+
+FRONTEND:
+
+Create:
+
+Analytics.jsx
+
+Route: /admin/analytics
+
+Install: npm install recharts
+
+Add:
+
+1. Top Stats Cards:
+
+Total Requests
+
+Pending
+
+Completed
+
+Today
+
+
+
+2. Pie Chart: Completed vs Pending
+
+
+3. Bar Chart: Service-wise requests
+
+
+4. Line Chart: Last 7 days activity
+
+
+
+Add loading state and error handling. Mobile responsive. Clean professional design.
+
+
+---
+
+5️⃣ BILINGUAL SUPPORT
+
+Ensure EN + Bengali working.
+
+Add translation keys:
+
+Track Request
+Enter Phone
+Check Status
+No records found
+Status
+Admin Notes
+Analytics
+Total Requests
+Pending
+Completed
+Today
+Service Breakdown
+Last 7 Days
+
+Update both en.json and bn.json.
+
+
+---
+
+6️⃣ SECURITY
+
+Validate inputs
+
+Use parameterized SQL queries
+
+Protect admin routes with JWT middleware
+
+Rate limit tracking endpoint
+
+Do not expose sensitive data
+
+
+
+---
+
+7️⃣ PERFORMANCE
+
+Optimize queries
+
+Use single aggregated SQL where possible
+
+Avoid unnecessary re-renders in React
+
+Use clean reusable components
+
+
+
+---
+
+Return:
+
+Backend route updates
+
+SQL queries
+
+DB migration change
+
+TrackRequest.jsx
+
+Analytics.jsx
+
+WhatsAppFloat.jsx
+
+sendEmail.js
+
+Updated translation files
+
+Required npm install commands
+
+
+Do not break existing functionality.
+
+
+---
+
+END.
+
+
