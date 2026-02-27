@@ -3,9 +3,8 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { createServer } from "http";
 import path from "path";
-import { fileURLToPath } from "url";
 import fs from "fs";
-import { serveStatic } from "./static"; // optional, can keep your implementation
+import { serveStatic } from "./static"; // optional, your existing static handler
 
 const app = express();
 const httpServer = createServer(app);
@@ -65,11 +64,11 @@ app.use((req, res, next) => {
 
 (async () => {
   try {
-    await registerRoutes(httpServer, app); // include DB init here if needed
+    await registerRoutes(httpServer, app); // include DB init if needed
     log("Routes and DB initialized successfully");
   } catch (err) {
     console.error("Failed to initialize routes or DB:", err);
-    process.exit(1); // Stop server if DB fails
+    process.exit(1);
   }
 
   // Global error handler
@@ -84,10 +83,11 @@ app.use((req, res, next) => {
     return res.status(status).json({ message });
   });
 
+  // -------------------------------
   // Serve frontend files in production
+  // -------------------------------
   if (process.env.NODE_ENV === "production") {
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = path.dirname(__filename);
+    // CommonJS-compatible __dirname
     const staticPath = path.join(__dirname, "../dist/public");
     const indexPath = path.join(staticPath, "index.html");
 
@@ -102,7 +102,7 @@ app.use((req, res, next) => {
       res.sendFile(indexPath);
     });
   } else {
-    // Development Vite server
+    // Development: Vite server
     const { setupVite } = await import("./vite");
     await setupVite(httpServer, app);
   }
@@ -120,7 +120,7 @@ app.use((req, res, next) => {
     }
   );
 
-  // Listen for server errors
+  // Server error listener
   httpServer.on("error", (err) => {
     console.error("Server failed to start:", err);
   });
