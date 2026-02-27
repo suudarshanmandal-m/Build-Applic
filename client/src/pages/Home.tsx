@@ -1,19 +1,27 @@
 import { Link } from "wouter";
 import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 import { useI18n } from "@/lib/i18n";
 import { useNotices } from "@/hooks/use-notices";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { format } from "date-fns";
 import { 
   FileEdit, Download, CreditCard, Plane, Smartphone, Train, 
   Wifi, Zap, Copy, Banknote, Printer, Layers, Image as ImageIcon, 
-  Briefcase, Building2, Car, Stethoscope, FileCheck, Globe, ChevronRight, Bell
+  Briefcase, Building2, Car, Stethoscope, FileCheck, Globe, ChevronRight, Bell,
+  MousePointer2
 } from "lucide-react";
 
 export default function Home() {
   const { t } = useI18n();
   const { data: notices, isLoading: loadingNotices } = useNotices();
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   const services = [
     { id: 's_onlineForm', icon: FileEdit, color: "bg-blue-100 text-blue-600" },
@@ -38,127 +46,233 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-background selection:bg-primary/20">
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-primary z-[60] origin-left"
+        style={{ scaleX }}
+      />
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative pt-20 pb-32 overflow-hidden">
-        {/* Abstract background shapes */}
-        <div className="absolute top-0 inset-x-0 h-full overflow-hidden z-0 pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary/5 blur-3xl"></div>
-          <div className="absolute top-40 -left-20 w-72 h-72 rounded-full bg-blue-400/5 blur-3xl"></div>
+      <section className="relative min-h-[85vh] flex items-center justify-center pt-20 pb-32 overflow-hidden bg-slate-50">
+        {/* Animated Gradient Background */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-blue-50/50 via-white to-blue-50/50">
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.2, 1],
+              x: [0, 50, 0],
+              y: [0, 30, 0]
+            }}
+            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] pointer-events-none"
+          />
+          <motion.div 
+            animate={{ 
+              scale: [1.2, 1, 1.2],
+              x: [0, -40, 0],
+              y: [0, 60, 0]
+            }}
+            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-40 -left-20 w-[500px] h-[500px] rounded-full bg-blue-400/10 blur-[100px] pointer-events-none"
+          />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="inline-block mb-6 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-bold tracking-wider uppercase"
+          >
+            Digital Service Excellence
+          </motion.div>
           <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-display font-bold text-foreground mb-6"
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="text-6xl md:text-8xl font-display font-bold text-foreground mb-8 tracking-tighter"
           >
             {t('appName')}
           </motion.h1>
           <motion.p 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-10 text-balance"
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            className="text-xl md:text-3xl text-muted-foreground max-w-3xl mx-auto mb-12 text-balance leading-relaxed"
           >
             {t('heroSubtitle')}
           </motion.p>
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="flex justify-center gap-4"
+            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+            className="flex flex-col sm:flex-row justify-center gap-6"
           >
             <Link href="/request">
-              <Button size="lg" className="h-14 px-8 text-lg rounded-full bg-primary text-primary-foreground shadow-xl shadow-primary/25 hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 transition-all duration-300">
-                {t('requestService')} <ChevronRight className="ml-2 h-5 w-5" />
-              </Button>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button size="lg" className="h-16 px-10 text-xl rounded-full bg-primary text-primary-foreground shadow-2xl shadow-primary/30 hover:shadow-primary/40 relative overflow-hidden group">
+                  <span className="relative z-10 flex items-center gap-2">
+                    {t('requestService')} <ChevronRight className="h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                  <motion.div 
+                    className="absolute inset-0 bg-white/10"
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: "100%" }}
+                    transition={{ duration: 0.6 }}
+                  />
+                </Button>
+              </motion.div>
             </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 1 }}
+            className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground/40"
+          >
+            <span className="text-[10px] uppercase tracking-widest font-bold">Scroll to Explore</span>
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <MousePointer2 size={20} className="rotate-180" />
+            </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* Main Content Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col lg:flex-row gap-12 w-full">
+      <div id="services" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 flex flex-col lg:flex-row gap-16 w-full">
         
         {/* Services Grid (Left/Main) */}
         <div className="flex-1">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="h-8 w-2 bg-primary rounded-full"></div>
-            <h2 className="text-3xl font-display font-bold">{t('services')}</h2>
-          </div>
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-4 mb-12"
+          >
+            <div className="h-10 w-2 bg-primary rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
+            <h2 className="text-4xl font-display font-bold tracking-tight">{t('services')}</h2>
+          </motion.div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service, index) => {
+          <motion.div 
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.1
+                }
+              }
+            }}
+          >
+            {services.map((service) => {
               const Icon = service.icon;
               return (
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
+                  variants={{
+                    hidden: { opacity: 0, y: 30 },
+                    show: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                  }}
                   key={service.id}
-                  className="group bg-card rounded-2xl p-6 border border-border hover:border-primary/50 shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 cursor-default"
+                  whileHover={{ y: -8 }}
+                  className="group relative bg-white rounded-3xl p-8 border border-slate-200 hover:border-primary/30 transition-all duration-500 cursor-default overflow-hidden shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(59,130,246,0.15)]"
                 >
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${service.color} transition-transform group-hover:scale-110 group-hover:-rotate-3`}>
-                    <Icon className="w-6 h-6" />
+                  {/* Subtle Glow Background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 ${service.color} transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-lg`}>
+                    <Icon className="w-7 h-7" />
                   </div>
-                  <h3 className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors">
+                  <h3 className="font-bold text-xl text-foreground group-hover:text-primary transition-colors duration-300">
                     {t(service.id)}
                   </h3>
+                  <div className="mt-4 w-8 h-1 bg-primary/20 group-hover:w-16 group-hover:bg-primary transition-all duration-500 rounded-full" />
                 </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
 
         {/* Notices Sidebar (Right) */}
-        <div className="w-full lg:w-96 flex-shrink-0">
-          <div className="sticky top-24">
-            <div className="bg-card rounded-2xl border border-border shadow-lg shadow-black/5 overflow-hidden">
-              <div className="bg-primary/5 p-6 border-b border-border flex items-center gap-3">
-                <Bell className="w-6 h-6 text-primary" />
-                <h3 className="text-xl font-display font-bold text-foreground">{t('latestNotices')}</h3>
+        <div className="w-full lg:w-[400px] flex-shrink-0">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="sticky top-24"
+          >
+            <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl shadow-slate-200/50 overflow-hidden group">
+              <div className="bg-primary p-8 text-white relative overflow-hidden">
+                <motion.div 
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  className="absolute -top-12 -right-12 w-32 h-32 bg-white/10 rounded-full blur-2xl"
+                />
+                <div className="relative z-10 flex items-center gap-4">
+                  <div className="p-3 bg-white/20 rounded-2xl backdrop-blur-sm">
+                    <Bell className="w-7 h-7" />
+                  </div>
+                  <h3 className="text-2xl font-display font-bold">{t('latestNotices')}</h3>
+                </div>
               </div>
               
-              <div className="p-6">
+              <div className="p-8">
                 {loadingNotices ? (
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     {[1, 2, 3].map(i => (
                       <div key={i} className="animate-pulse">
-                        <div className="h-4 bg-muted rounded w-1/4 mb-2"></div>
-                        <div className="h-5 bg-muted rounded w-3/4 mb-2"></div>
-                        <div className="h-4 bg-muted rounded w-full"></div>
+                        <div className="h-4 bg-slate-100 rounded w-1/4 mb-3"></div>
+                        <div className="h-6 bg-slate-100 rounded w-3/4 mb-3"></div>
+                        <div className="h-4 bg-slate-100 rounded w-full"></div>
                       </div>
                     ))}
                   </div>
                 ) : notices && notices.length > 0 ? (
-                  <div className="space-y-6">
-                    {notices.map((notice) => (
-                      <div key={notice.id} className="relative pl-4 border-l-2 border-primary/30">
-                        <div className="absolute w-2 h-2 rounded-full bg-primary -left-[5px] top-1.5"></div>
-                        <p className="text-xs text-muted-foreground font-medium mb-1">
+                  <div className="space-y-10">
+                    {notices.map((notice, idx) => (
+                      <motion.div 
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: idx * 0.1 }}
+                        key={notice.id} 
+                        className="relative pl-6 group/item"
+                      >
+                        <div className="absolute left-0 top-1 bottom-0 w-px bg-slate-200 group-hover/item:bg-primary transition-colors duration-300"></div>
+                        <motion.div 
+                          className="absolute w-3 h-3 rounded-full bg-slate-200 -left-[6px] top-1.5 border-2 border-white group-hover/item:bg-primary group-hover/item:scale-125 transition-all duration-300"
+                        />
+                        <p className="text-xs text-primary font-bold uppercase tracking-wider mb-2">
                           {format(new Date(notice.createdAt!), 'MMM dd, yyyy')}
                         </p>
-                        <h4 className="font-bold text-foreground mb-1">{notice.title}</h4>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{notice.message}</p>
-                      </div>
+                        <h4 className="font-bold text-lg text-slate-800 mb-2 group-hover/item:text-primary transition-colors">{notice.title}</h4>
+                        <p className="text-sm text-slate-500 leading-relaxed font-medium">{notice.message}</p>
+                      </motion.div>
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-8 text-muted-foreground">
-                    <Bell className="w-8 h-8 mx-auto mb-3 opacity-20" />
-                    <p>{t('noNotices')}</p>
+                  <div className="text-center py-12 text-slate-400">
+                    <Bell className="w-12 h-12 mx-auto mb-4 opacity-10" />
+                    <p className="font-medium">{t('noNotices')}</p>
                   </div>
                 )}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
       </div>
+      <Footer />
     </div>
   );
 }

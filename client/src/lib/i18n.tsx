@@ -96,3 +96,20 @@ export function useI18n() {
   }
   return context;
 }
+
+// Add footer translations to the dictionary
+const footerTranslations: Translations = {
+  quickLinks: { en: "Quick Links", bn: "দ্রুত লিঙ্ক" },
+  servicesLink: { en: "Services", bn: "সেবা" },
+  contactLink: { en: "Contact", bn: "যোগাযোগ" },
+  adminLogin: { en: "Admin Login", bn: "অ্যাডমিন লগইন" },
+  workingHours: { en: "Working Hours", bn: "কাজের সময়" },
+  workingDays: { en: "Monday – Saturday", bn: "সোমবার – শনিবার" },
+  address: { en: "Address", bn: "ঠিকানা" },
+  phone: { en: "Phone", bn: "ফোন" },
+  email: { en: "Email", bn: "ইমেল" },
+  rightsReserved: { en: "All Rights Reserved", bn: "সর্বস্বত্ব সংরক্ষিত" },
+  proprietor: { en: "Prop. – Prabir & Subham", bn: "প্রো. – প্রবীর ও শুভম" },
+};
+
+Object.assign(dictionary, footerTranslations);

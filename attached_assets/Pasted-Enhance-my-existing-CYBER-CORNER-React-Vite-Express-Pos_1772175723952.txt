@@ -1,0 +1,82 @@
+Enhance my existing CYBER CORNER React + Vite + Express + PostgreSQL application with a professional animated footer and modern UI animations.
+Do NOT rebuild the project. Modify the existing frontend only.
+1️⃣ ADD PROFESSIONAL FOOTER COMPONENT
+Create a reusable component:
+src/components/Footer.jsx
+Footer must include:
+Business Name: CYBER CORNER
+Prop. – Prabir & Subham
+Address: Gopiballavpur (In front of Yatra Maydan)
+Jhargram – 721506
+Phone: 9832450395
+6297320156
+Email: cybercorner77@gmail.com
+Sections in footer:
+Quick Links (Home, Services, Contact, Admin Login)
+Our Services (short list 6–8 items)
+Contact Information
+Working Hours: Monday – Saturday
+Social Media Icons (Facebook, WhatsApp placeholder)
+Copyright: © 2026 CYBER CORNER. All Rights Reserved.
+Design requirements:
+Dark blue background (#0f172a or similar)
+White text
+Accent color light blue
+Responsive grid layout
+Proper spacing
+Modern font
+Subtle top border glow effect
+2️⃣ ADD SMOOTH ANIMATIONS USING FRAMER MOTION
+Install:
+npm install framer-motion
+Add animations:
+Fade-in on page load
+Slide-up effect for service cards
+Smooth hover scale effect on buttons
+Hover glow effect on cards
+Animated underline for navbar links
+Smooth transition between language toggle
+Dashboard cards animate when loaded
+Use:
+import { motion } from "framer-motion"
+Animations should be:
+Smooth
+Professional
+Not too fast
+Duration around 0.4–0.6s
+3️⃣ HERO SECTION ANIMATION
+Enhance landing page hero:
+Add gradient animated background
+Add floating subtle shapes (blur circles)
+Add text fade-in
+Add animated call-to-action button
+Add subtle scroll indicator animation
+4️⃣ SERVICE CARD ANIMATION
+When services appear:
+Fade + Slide from bottom
+Stagger effect (each card slightly delayed)
+Hover lift effect
+Soft shadow glow on hover
+5️⃣ FOOTER ANIMATION
+Footer should:
+Fade-in when scrolled into view
+Icons should slightly scale on hover
+Smooth link hover transition
+6️⃣ PERFORMANCE RULES
+Keep animations GPU-friendly
+Do not block rendering
+Use transform and opacity only
+Avoid heavy libraries besides framer-motion
+7️⃣ KEEP BILINGUAL SYSTEM WORKING
+Ensure:
+Footer text supports EN + Bengali toggle
+Translation keys added to both en.json and bn.json
+Language switching remains smooth
+Return:
+Updated Footer.jsx
+Updated App.jsx integration
+Updated Home page with animations
+Required CSS changes
+Translation additions
+Installation command if needed
+Do not modify backend.
