@@ -1,0 +1,360 @@
+Build a complete production-ready full-stack web application for a digital service center named CYBER CORNER.
+
+Business Details:
+
+Business Name: CYBER CORNER
+Prop. – Prabir & Subham
+
+Address:
+Gopiballavpur (In front of Yatra Maydan),
+Jhargram – 721506
+
+Phone:
+9832450395 | 6297320156
+
+The system must use:
+
+Node.js
+
+Express.js
+
+MongoDB (Mongoose)
+
+EJS templating
+
+Multer (file upload)
+
+JWT authentication (HTTP-only cookies)
+
+bcryptjs
+
+dotenv
+
+cookie-parser
+
+i18n (English + Bengali)
+
+helmet
+
+compression
+
+express-rate-limit
+
+
+The application must be fully functional and production secure.
+It must be deployment-ready for Render.
+
+
+---
+
+FEATURES REQUIRED:
+
+1. ADMIN AUTHENTICATION SYSTEM
+
+
+
+Admin login using email and password
+
+Password hashed using bcrypt
+
+Generate JWT token on login
+
+Store JWT in HTTP-only cookie
+
+Middleware to protect admin routes
+
+Logout functionality
+
+Redirect if not authenticated
+
+
+Admin model fields:
+
+username
+
+email
+
+password (hashed)
+
+
+
+---
+
+2. SERVICE REQUEST SYSTEM
+
+
+
+Create ServiceRequest model:
+
+name (required)
+
+phone (required)
+
+serviceType (required)
+
+message
+
+documentFile (file path)
+
+status (Pending / Completed)
+
+createdAt (Date)
+
+
+Customer must be able to:
+
+Fill service form
+
+Upload PDF/JPG/PNG (max 5MB)
+
+Submit request
+
+Data saved in MongoDB
+
+File saved in /uploads folder
+
+
+
+---
+
+3. ADMIN DASHBOARD
+
+
+
+After login admin must be able to:
+
+View total requests
+
+View today’s requests
+
+View all requests in table
+
+Update request status
+
+Delete request
+
+View uploaded documents
+
+Add and delete notices
+
+
+
+---
+
+4. NOTICE SYSTEM
+
+
+
+Create Notice model:
+
+title
+
+message
+
+createdAt
+
+
+Admin can manage notices.
+
+Homepage must display latest notices dynamically.
+
+
+---
+
+5. BILINGUAL SYSTEM (English + Bengali)
+
+
+
+Use i18n middleware.
+
+Default language: English
+Second language: Bengali (বাংলা)
+
+Create:
+
+/locales/en.json
+/locales/bn.json
+
+Translate:
+
+Navbar
+
+Buttons
+
+Form labels
+
+Dashboard headings
+
+Status text
+
+Notices
+
+Flash messages
+
+
+Add language toggle button:
+
+EN | বাংলা
+
+Language must be stored in cookie.
+
+
+---
+
+6. SERVICES LIST ON HOMEPAGE
+
+
+
+Display these services:
+
+Online Form Fill-up
+
+Aadhaar Card Download
+
+PAN Card
+
+Passport
+
+Mobile Recharge
+
+Railway Ticket Booking
+
+Data Recharge
+
+Electricity Bill Payment
+
+Xerox / Photocopy
+
+Cash Withdrawal (ATM & Aadhaar Based)
+
+Printing Services
+
+Lamination
+
+Photo Print
+
+Trade Licence
+
+Udyam Registration
+
+Vehicle Tax Payment
+
+CMC Vellore Appointment
+
+Driver Authorization
+
+All Types of Online Applications
+
+
+
+---
+
+7. UI DESIGN
+
+
+
+Professional blue & white theme
+
+Fully responsive
+
+Clean card layout
+
+Sidebar admin dashboard
+
+Flash messages
+
+Form validation
+
+Mobile friendly
+
+
+
+---
+
+8. SECURITY REQUIREMENTS
+
+
+
+Use helmet
+
+Use compression
+
+Use express-rate-limit
+
+Input validation
+
+Central error handler
+
+404 page
+
+Secure cookies in production
+
+Use environment variables only
+
+No hardcoded secrets
+
+
+
+---
+
+9. PROJECT STRUCTURE
+
+
+
+/models Admin.js ServiceRequest.js Notice.js
+
+/routes adminRoutes.js publicRoutes.js
+
+/controllers adminController.js publicController.js
+
+/middleware authMiddleware.js errorMiddleware.js
+
+/locales en.json bn.json
+
+/views layout.ejs index.ejs login.ejs dashboard.ejs requests.ejs uploadForm.ejs
+
+/public /uploads
+
+server.js .env.example render.yaml README.md
+
+
+---
+
+10. RENDER DEPLOYMENT READY
+
+
+
+Use:
+
+process.env.PORT || 5000
+
+package.json scripts:
+
+"start": "node server.js" "dev": "nodemon server.js"
+
+Create .env.example:
+
+MONGO_URI= JWT_SECRET= NODE_ENV=production
+
+
+---
+
+The application must:
+
+Run locally with npm run dev
+
+Run in production with npm start
+
+Deploy successfully on Render
+
+Have working authentication
+
+Have working file upload
+
+Have working bilingual toggle
+
+Be production secure
+
+
+
+Generate complete working code for all files.
